@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularValidations</title>
+
+    <script src="//code.angularjs.org/1.4.0/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        .help-block{
+            color: crimson;
+        }
+        /*ng-touched is used in condition when field is touched*/
+        /*ng-invalid is used in condition when data in field is invalid*/
+        .CSS input.ng-invalid.ng-touched {
+            background-color: #FA787E;
+        }
+        /*ng-valid is used in condition when data in field is valid*/
+        .CSS input.ng-valid.ng-touched {
+            background-color: #78FA89;
+        }
+    </style>
+</head>
+<body ng-app="app">
+<form name="userForm" novalidate CLASS="CSS">
+    <h2>Complete Validation In AngularJs </h2>
+    <h2>_____________________________________________________________________________________________________________</h2>
+    <div>
+        <!--$error is used  to display the error message-->
+        <!--$touched is used in condition when field is touched-->
+        <!--required is used for mandatory fields-->
+        <!--ng-message is used to display the message-->
+        <h3>Name Field Validation:</h3>
+        <label for name>Name1(for required fields):</label>
+        <input type="text"  name="username1" ng-model="username1"   required>
+        <div class="help-block" ng-messages="userForm.username1.$error"  ng-if="userForm.username1.$touched">
+
+            <p ng-message="required">username is required.</p>
+
+        </div>
+        </div>
+    <div>
+        <!--ng-minlength is used to set minimum length to the field-->
+        <!--ng-maxlength is used to set maximum length to the field-->
+        <label for name>Name2(for maximum and minimum length):</label>
+        <input type="text"  name="username2" ng-model="username2"  ng-minlength="2"
+               ng-maxlength="10" >
+        <div class="help-block" ng-messages="userForm.username2.$error"  ng-if="userForm.username2.$touched">
+            <p ng-message="minlength">Your username is too short.</p>
+            <p ng-message="maxlength">Your username is too long.</p>
+
+        </div>
+        </div>
+    <div>
+        <!--ng-pattern is used to set the pattern to be accepted by the field-->
+        <label for name>Name3(for accepting only alphabates):</label>
+        <input type="text" ng-pattern ="/^[a-zA-Z\s]*$/" name="username3" ng-model="username3"   required>
+        <div class="help-block" ng-messages="userForm.username3.$error"  ng-if="userForm.username3.$touched">
+
+            <p ng-message="pattern">only alphabates are accepted.</p>
+        </div>
+
+    </div>
+    <h2>_____________________________________________________________________________________________________________</h2>
+    <div>
+        <h3>Email Address Field Validation:</h3>
+        <label for email1>EmailAddress 1(validation by ng-pattern):</label>
+        <input type="text" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" name="email1" ng-model="email1" required>
+        <div class="help-block" ng-messages="userForm.email1.$error"  ng-if="userForm.email1.$touched">
+            <p ng-message="required">EmailAddress 1 is required.</p>
+            <p ng-message="pattern">Invalid EmailAddress 1.</p>
+        </div>
+    </div>
+    <div>
+        <label for email2 >EmailAddress 2(validation by required field and type):</label>
+        <input type="email"  name="email2" ng-model="email2" required>
+        <div class="help-block" ng-messages="userForm.email2.$error"  ng-if="userForm.email2.$touched">
+            <p ng-message="required">EmailAddress 2 is required.</p>
+            <p ng-message="email">Invalid EmailAddress 2.</p>
+        </div>
+    </div>
+    <h2>_____________________________________________________________________________________________________________</h2>
+    <div>
+        <h3>password validation </h3>
+        <label for pswd>Password(validation by required fields,ng-pattern ,min and max length):</label>
+        <input type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="pswd" ng-model="pswd" required ng-minlength="8" ng-maxlength="10">
+        <div class="help-block" ng-messages="userForm.pswd.$error"  ng-if="userForm.pswd.$touched">
+            <p ng-message="required">Password is required.</p>
+            <p ng-message="pattern">Invalid Password.....</p>
+            <p ng-message="minlength">Password is too short.</p>
+            <p ng-message="maxlength">Password is too long.</p>
+        </div>
+    </div>
+    <div>
+
+        <div >
+            <label for="password">Password</label>
+            <input type="text" name="password" id="password" ng-model="credentials.password" ng-model-options="{allowInvalid: true}" pattern-validator="((?=.*\d)(?=.*[A-Z])(?=.*\W).{8,8})"  />
+        </div>
+
+        <div >
+            <label>Password Strength</label>
+            <password-strength ng-model="credentials.password"></password-strength>
+        </div>
+
+        <div class="alert alert-error" ng-show="form.password.$error.passwordPattern">The password does not meet requirements!</div>
+    </div>
+    <h2>_____________________________________________________________________________________________________________</h2>
+    <div>
+        <h3>Number fields Validation</h3>
+       <div> <label for phone>Phone Number:</label>
+        <input type="text" ng-pattern="/^[0-9]{0,10}$/" name="phone" ng-model="phone" required ng-minlength="10" ng-maxlength="10"  >
+        <div class="help-block" ng-messages="userForm.phone.$error"  ng-if="userForm.phone.$touched">
+            <p ng-message="required">Phone number is required.</p>
+            <p ng-message="pattern">numbers only accepted</p>
+            <p ng-message="minlength">Phone number should be  10 characters</p>
+            <p ng-message="maxlength">Phone number should be  10 characters.</p>
+        </div>
+    </div>
+        <div><label for phone>Zipcode:</label>
+            <input type="text" ng-pattern="/^[0-9]{0,10}$/" name="zip" ng-model="zip" required ng-minlength="5" ng-maxlength="5"  >
+            <div class="help-block" ng-messages="userForm.zip.$error"  ng-if="userForm.zip.$touched">
+                <p ng-message="required">zipcode is required.</p>
+                <p ng-message="pattern">numbers only accepted</p>
+                <p ng-message="minlength">zipcode should be 5 characters</p>
+                <p ng-message="maxlength">zipcode should be  5 characters.</p>
+            </div>
+        </div>
+    <div>
+        <label for dob>Date Of Birth:</label>
+        <input type="date" name="dob" ng-model="dob" required  min="1992-01-01" max="2013-12-31">
+        <div class="help-block" ng-messages="userForm.dob.$error"  ng-if="userForm.dob.$touched">
+            <p ng-message="required">Date Of Birth is required.</p>
+            <p ng-message="min">date is past date</p>
+            <p ng-message="max">date is future date</p>
+        </div>
+    </div>
+    <div>
+        <label for gender>Gender: </label>
+        <input type="radio" name="gender" ng-model="gender" value="male" required/>male
+        <input type="radio" name="gender"ng-model="gender" value="female" required/>female<br />
+        <div class="help-block" ng-messages="userForm.gender.$error"  ng-if="userForm.gender.$touched">
+            <p ng-message="required">Gender is required.</p></div></div>
+
+        <div ng-repeat="driver in drivers" class="ng-scope">
+            <input required="" type="radio" value="M" name="driverGender0" ng-model="driver.gender"/>
+            <input required="" type="radio" value="F" name="driverGender0" ngmodel="driver.gender">
+        </div>
+        <div ng-repeat="driver in drivers" class="ng-scope">
+            <input required="" type="radio" value="M" name="driverGender1" ng-model="driver.gender"/>
+            <input required="" type="radio" value="F" name="driverGender1" ngmodel="driver.gender"/>
+        </div>
+</form>
+
+
+</body>
+</html>
